@@ -1,0 +1,81 @@
+{
+  "title": "The Other Route",
+  "endingOrder": ["sweetArrival", "newFriend", "wrongStop", "secretGarden"],
+  "endings": {
+    "sweetArrival": {
+      "title": "Sweet Arrival",
+      "text": "The map still makes no sense, but the {flavor} is perfect. You got here on your own.",
+      "scene": "sweet",
+      "route": "train",
+      "hint": "Get directions, then go it alone."
+    },
+    "newFriend": {
+      "title": "New Friend",
+      "text": "Two cones, one bench, and a stranger who isn't a stranger anymore. He even knows a shortcut home.",
+      "scene": "friend",
+      "route": "train",
+      "hint": "Be good company on the train."
+    },
+    "wrongStop": {
+      "title": "Wrong Stop",
+      "text": "The doors close behind you. The sign says WILLOW PARK. The ice cream shop is very, very far away.",
+      "scene": "wrong",
+      "route": "train",
+      "hint": "What happens if the conversation goes badly?"
+    },
+    "secretGarden": {
+      "title": "Secret Garden",
+      "text": "Behind a door with no sign, the city goes quiet. Whoever wrote your name on that envelope wanted you to find this.",
+      "scene": "garden",
+      "route": "envelope",
+      "hint": "What was in the envelope?"
+    }
+  },
+  "dialogue": {
+    "start": {
+      "line": "This line's always late. Where are you headed with that giant map?",
+      "choices": [
+        { "text": "\"The famous ice cream place! Do you know it?\"", "recap": "Asked about the ice cream shop", "mood": 1, "next": "icecream" },
+        { "text": "\"Is that book any good?\"", "recap": "Asked about his book", "mood": 1, "next": "book" },
+        { "text": "\"Why do you want to know?\"", "recap": "Got suspicious", "mood": -1, "next": "suspicious" }
+      ]
+    },
+    "icecream": {
+      "line": "Oh, the famous one? You're three stops away. Get off at Elm Street.",
+      "choices": [
+        { "text": "\"Could you show me the way?\"", "recap": "Asked him to show the way", "mood": 1, "companion": true, "reaction": "Sure. I'm getting off there anyway, and I never say no to ice cream.", "next": "shop" },
+        { "text": "\"Thanks! I'll find it from here.\"", "recap": "Thanked him and went alone", "reaction": "Good luck. Elm Street, don't forget.", "next": "shop" },
+        { "text": "[Start scrolling your phone]", "recap": "Stopped listening", "mood": -1, "reaction": "He shrugs and goes back to his book. You look up three stops too late.", "ending": "wrongStop" }
+      ]
+    },
+    "book": {
+      "line": "It's about a guy who gets lost in a city. Kind of like you, actually.",
+      "choices": [
+        { "text": "\"Ha! Okay, I'm completely lost.\"", "recap": "Admitted you were lost", "mood": 1, "companion": true, "reaction": "I knew it. Come on, I'll walk you there. It's on my way.", "next": "shop" },
+        { "text": "\"Do you know how to get to the ice cream place?\"", "recap": "Asked for directions", "reaction": "Elm Street, three stops. You can't miss it.", "next": "shop" },
+        { "text": "\"Sounds kind of boring.\"", "recap": "Called his book boring", "mood": -1, "reaction": "Wow. Okay. He moves to another seat, and you miss the announcement for your stop.", "ending": "wrongStop" }
+      ]
+    },
+    "suspicious": {
+      "line": "Relax. I was just trying to help.",
+      "choices": [
+        { "text": "\"Sorry. I'm lost and a little stressed.\"", "recap": "Apologized", "mood": 1, "reaction": "No worries. Elm Street, three stops. Breathe.", "next": "shop" },
+        { "text": "\"Mind your own business.\"", "recap": "Told him to mind his business", "mood": -1, "reaction": "He calls the conductor over. At the next stop, you're asked to step off the train.", "ending": "wrongStop" },
+        { "text": "[Stay silent and look away]", "recap": "Stayed silent", "mood": -1, "reaction": "The silence gets awkward. You stare at the floor so hard you miss your stop.", "ending": "wrongStop" }
+      ]
+    }
+  },
+  "maze": [
+    "###########",
+    "#S..#.....#",
+    "##.##.###.#",
+    "#..#..#...#",
+    "#.##.##.###",
+    "#....#....#",
+    "####.#.##.#",
+    "#....#..#.#",
+    "#.#####.#.#",
+    "#.......#E#",
+    "###########"
+  ]
+}

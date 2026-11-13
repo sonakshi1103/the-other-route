@@ -4,368 +4,398 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Other Route</title>
+<meta name="description" content="A short interactive story about getting lost on the subway on the way to the best ice cream in town.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="bar">
-  <h1><span class="dot"></span>The Other Route</h1>
-  <nav class="tabs" id="tabs" aria-label="Screens"></nav>
-</header>
-<main>
-  <p class="note" id="note"></p>
-  <div class="frame" id="frame">
+<noscript><p class="noscript">The Other Route needs JavaScript to run. Please enable it and reload the page.</p></noscript>
 
-    <!-- 1. HOME -->
-    <section class="screen" id="home" data-label="Home" data-note="<b>Home.</b> A live platform scene sits behind a single entry card. Continue appears only when local storage has a saved run.">
-      <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <rect width="960" height="540" fill="#dfe5ea"/>
-        <rect width="960" height="330" fill="#c9d3dc"/>
-        <rect y="150" width="960" height="18" fill="#b3c0cc"/>
-        <g fill="#aebccb"><rect x="500" width="40" height="330"/><rect x="820" width="40" height="330"/></g>
-        <rect y="330" width="960" height="70" fill="#a9b5c1"/>
-        <rect y="398" width="960" height="8" fill="#f2c230"/>
-        <rect y="406" width="960" height="134" fill="#3a4150"/>
-        <g stroke="#7d8698" stroke-width="4"><line x1="0" y1="470" x2="960" y2="470"/><line x1="0" y1="500" x2="960" y2="500"/></g>
-        <!-- subway line motif -->
-        <g fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
-          <path d="M560 70 H700 L760 130 H940" stroke="#e0362c"/>
-          <path d="M560 100 H680 L740 160 V230 H940" stroke="#3f9a5c"/>
-          <path d="M640 40 V250 L700 300" stroke="#f2c230"/>
-        </g>
-        <g fill="#fff" stroke="#1d2433" stroke-width="4"><circle cx="700" cy="70" r="9"/><circle cx="640" cy="100" r="9"/><circle cx="940" cy="130" r="9"/><circle cx="940" cy="230" r="9"/></g>
-        <!-- tourist -->
-        <g transform="translate(700 0)">
-          <rect x="-17" y="262" width="34" height="62" rx="12" fill="#2f6fb0"/>
-          <rect x="-26" y="268" width="12" height="34" rx="4" fill="#1f4f80"/>
-          <circle cx="0" cy="246" r="15" fill="#f0c9a0"/>
-          <rect x="-15" y="230" width="30" height="8" rx="4" fill="#e0362c"/>
-        </g>
-      </svg>
-      <div class="home-card">
-        <div class="eyebrow">An interactive story</div>
-        <h2>The Other Route</h2>
-        <p>A new city, a confusing subway system, and one goal: find the best ice cream in town. Sounds simple enough, right?</p>
-        <div class="stack">
-          <button class="choice primary" data-go="platform">Start the story <span>→</span></button>
-          <button class="choice" data-go="train">Continue · Train ride <span>→</span></button>
-        </div>
-        <div class="links">
-          <button data-go="endings">Endings (2/4)</button>
-          <button data-go="about">About</button>
-        </div>
+<!-- Screen-reader announcements for things that change without moving focus -->
+<p id="sr-status" class="sr-only" aria-live="polite"></p>
+
+<main class="frame" id="frame">
+
+  <!-- 1. HOME -->
+  <section class="screen" id="home" aria-labelledby="home-title">
+    <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="960" height="540" fill="#dfe5ea"/>
+      <rect width="960" height="330" fill="#c9d3dc"/>
+      <rect y="150" width="960" height="18" fill="#b3c0cc"/>
+      <g fill="#aebccb"><rect x="500" width="40" height="330"/><rect x="820" width="40" height="330"/></g>
+      <rect y="330" width="960" height="70" fill="#a9b5c1"/>
+      <rect y="398" width="960" height="8" fill="#f2c230"/>
+      <rect y="406" width="960" height="134" fill="#3a4150"/>
+      <g stroke="#7d8698" stroke-width="4"><line x1="0" y1="470" x2="960" y2="470"/><line x1="0" y1="500" x2="960" y2="500"/></g>
+      <g fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
+        <path d="M560 70 H700 L760 130 H940" stroke="#e0362c"/>
+        <path d="M560 100 H680 L740 160 V230 H940" stroke="#3f9a5c"/>
+        <path d="M640 40 V250 L700 300" stroke="#f2c230"/>
+      </g>
+      <g fill="#fff" stroke="#1d2433" stroke-width="4"><circle cx="700" cy="70" r="9"/><circle cx="640" cy="100" r="9"/><circle cx="940" cy="130" r="9"/><circle cx="940" cy="230" r="9"/></g>
+      <g transform="translate(700 0)">
+        <rect x="-17" y="262" width="34" height="62" rx="12" fill="#2f6fb0"/>
+        <rect x="-26" y="268" width="12" height="34" rx="4" fill="#1f4f80"/>
+        <circle cx="0" cy="246" r="15" fill="#f0c9a0"/>
+        <rect x="-15" y="230" width="30" height="8" rx="4" fill="#e0362c"/>
+      </g>
+    </svg>
+    <div class="home-card">
+      <div class="eyebrow">An interactive story</div>
+      <h1 id="home-title" tabindex="-1" data-focus>The Other Route</h1>
+      <p>A new city, a confusing subway system, and one goal: find the best ice cream in town. Sounds simple enough, right?</p>
+      <p class="load-error" id="load-error" role="alert" hidden>The story couldn't load. Open this project through VS Code Live Server or the published site, not by double-clicking the file.</p>
+      <div class="stack">
+        <button class="choice primary" data-go="name" id="start-btn">Start the story <span aria-hidden="true">→</span></button>
+        <button class="choice" data-action="continue" id="continue-btn" hidden>Continue <span aria-hidden="true">→</span></button>
       </div>
-      <div class="anno" style="left:44cqw;top:47.5cqw"><i>1</i>Only shown when a save exists</div>
-    </section>
+      <div class="links">
+        <button data-go="endings" id="endings-link">Endings (0/4)</button>
+        <button data-go="about">About</button>
+      </div>
+    </div>
+  </section>
 
-    <!-- 2. PLATFORM WALK -->
-    <section class="screen" id="platform" data-label="Platform walk" data-note="<b>Story player: platform walk.</b> The player moves with ← → or the on-screen keys. The red envelope is the only saturated object in the scene.">
-      <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <rect width="960" height="540" fill="#dfe5ea"/>
-        <rect width="960" height="330" fill="#c9d3dc"/>
-        <rect y="150" width="960" height="18" fill="#b3c0cc"/>
-        <rect x="215" y="78" width="200" height="44" rx="6" fill="#2b3245"/>
-        <text x="315" y="107" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-weight="700" font-size="20" letter-spacing="3">CENTRAL</text>
-        <g><circle cx="237" cy="100" r="7" fill="#e0362c"/><circle cx="393" cy="100" r="7" fill="#3f9a5c"/></g>
-        <g fill="#aebccb"><rect x="120" width="40" height="330"/><rect x="470" width="40" height="330"/><rect x="820" width="40" height="330"/></g>
-        <rect y="330" width="960" height="70" fill="#a9b5c1"/>
-        <rect y="398" width="960" height="8" fill="#f2c230"/>
-        <rect y="406" width="960" height="134" fill="#3a4150"/>
-        <!-- envelope -->
-        <circle cx="545" cy="318" r="26" fill="#e0362c" opacity=".15"/>
+  <!-- 2. NAME FORM -->
+  <section class="screen" id="name" aria-labelledby="name-title">
+    <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="960" height="540" fill="#c9d3dc"/>
+      <g fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity=".35">
+        <path d="M-20 120 H300 L380 200 H980" stroke="#e0362c"/>
+        <path d="M-20 300 H220 L300 380 H980" stroke="#3f9a5c"/>
+        <path d="M640 -20 V560" stroke="#f2c230"/>
+      </g>
+    </svg>
+    <form class="card form-card" id="name-form" novalidate>
+      <div class="eyebrow">Before you go</div>
+      <h2 id="name-title" tabindex="-1" data-focus>What's your name, traveler?</h2>
+      <p class="muted">Someone in this city seems to know it already.</p>
+      <label for="player-name">Your name</label>
+      <input id="player-name" name="playerName" type="text" autocomplete="given-name" aria-describedby="name-help name-error" required>
+      <p class="help" id="name-help">1–20 characters: letters, spaces, hyphens or apostrophes.</p>
+      <p class="error" id="name-error" role="alert"></p>
+      <div class="choices">
+        <button type="submit" class="choice primary">Start my trip <span aria-hidden="true">→</span></button>
+        <button type="button" class="choice" data-go="home">Back</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- 3. PLATFORM WALK -->
+  <section class="screen" id="platform" aria-label="Subway platform">
+    <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="960" height="540" fill="#dfe5ea"/>
+      <rect width="960" height="330" fill="#c9d3dc"/>
+      <rect y="150" width="960" height="18" fill="#b3c0cc"/>
+      <rect x="215" y="78" width="200" height="44" rx="6" fill="#2b3245"/>
+      <text x="315" y="107" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-weight="700" font-size="20" letter-spacing="3">CENTRAL</text>
+      <g><circle cx="237" cy="100" r="7" fill="#e0362c"/><circle cx="393" cy="100" r="7" fill="#3f9a5c"/></g>
+      <g fill="#aebccb"><rect x="120" width="40" height="330"/><rect x="470" width="40" height="330"/><rect x="820" width="40" height="330"/></g>
+      <rect y="330" width="960" height="70" fill="#a9b5c1"/>
+      <rect y="398" width="960" height="8" fill="#f2c230"/>
+      <rect y="406" width="960" height="134" fill="#3a4150"/>
+      <g id="platform-envelope">
+        <circle cx="545" cy="318" r="26" fill="#e0362c" opacity=".15" class="pulse"/>
         <g transform="translate(530 308) rotate(-8)"><rect width="30" height="20" rx="2" fill="#e0362c"/><path d="M0 0 L15 11 L30 0" fill="none" stroke="#fff" stroke-width="2"/></g>
-        <!-- tourist -->
-        <g transform="translate(250 0)">
-          <rect x="-17" y="262" width="34" height="62" rx="12" fill="#2f6fb0"/>
-          <rect x="-26" y="268" width="12" height="34" rx="4" fill="#1f4f80"/>
-          <circle cx="0" cy="246" r="15" fill="#f0c9a0"/>
-          <rect x="-15" y="230" width="30" height="8" rx="4" fill="#e0362c"/>
-          <rect x="14" y="280" width="18" height="13" rx="2" fill="#fff" stroke="#1d2433" stroke-width="1.5"/>
-          <path d="M40 250 h28 m-8 -7 l8 7 l-8 7" stroke="#1d2433" stroke-width="3" fill="none" stroke-linecap="round" opacity=".5"/>
-        </g>
-      </svg>
-      <div class="hud" data-hud="Platform,Choice,Ride,Shop,End" data-now="0" style="--c:var(--red)"></div>
-      <div class="panel">
-        <div class="row">
-          <div>
-            <p class="story">You arrive at the subway station, trying to figure out which train to take to a famous ice cream shop across the city. As you look around the platform, you notice a red envelope lying near one of the pillars.</p>
-            <div class="hint">Walk with ← → · or use the keys</div>
-          </div>
-          <div class="keys">
-            <button class="key" aria-label="Walk left">←</button>
-            <button class="key" aria-label="Walk right" data-go="choice">→</button>
-          </div>
+      </g>
+      <g id="walker" transform="translate(250 0)">
+        <rect x="-17" y="262" width="34" height="62" rx="12" fill="#2f6fb0"/>
+        <rect x="-26" y="268" width="12" height="34" rx="4" fill="#1f4f80"/>
+        <circle cx="0" cy="246" r="15" fill="#f0c9a0"/>
+        <rect x="-15" y="230" width="30" height="8" rx="4" fill="#e0362c"/>
+        <rect x="14" y="280" width="18" height="13" rx="2" fill="#fff" stroke="#1d2433" stroke-width="1.5"/>
+      </g>
+    </svg>
+    <div class="hud"></div>
+    <div class="panel">
+      <div class="row">
+        <div>
+          <p class="story" id="platform-text" tabindex="-1" data-focus>You arrive at the subway station, trying to figure out which train to take to a famous ice cream shop across the city. As you look around the platform, something red catches your eye near one of the pillars.</p>
+          <div class="hint" id="platform-hint">Walk with ← → or use the buttons.</div>
+          <div class="choices"><button class="choice primary" data-action="pickup" id="pickup-btn" hidden><kbd>1</kbd>Pick up the envelope</button></div>
+        </div>
+        <div class="keys">
+          <button class="key" data-action="walk-left" aria-label="Walk left">←</button>
+          <button class="key" data-action="walk-right" aria-label="Walk right">→</button>
         </div>
       </div>
-      <div class="anno" style="left:48cqw;top:26cqw"><i>2</i>Only saturated object = the clue</div>
-      <div class="anno" style="left:70cqw;top:8.4cqw"><i>3</i>Progress as a subway line</div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 3. CHOICE -->
-    <section class="screen" id="choice" data-label="The choice" data-note="<b>Story player: the key choice.</b> Two clear options, numbered for the keyboard (press 1 or 2). Focus moves to the new text when a scene loads.">
-      <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <rect width="960" height="540" fill="#dfe5ea"/>
-        <rect width="960" height="330" fill="#c9d3dc"/>
-        <!-- train arriving -->
-        <rect x="560" y="120" width="460" height="230" rx="28" fill="#e7ecf0" stroke="#8d9aa7" stroke-width="4"/>
-        <rect x="560" y="300" width="460" height="16" fill="#e0362c"/>
-        <g fill="#2b3245"><rect x="600" y="160" width="90" height="80" rx="10"/><rect x="760" y="150" width="70" height="170" rx="6" fill="#f6d77a"/><rect x="840" y="150" width="70" height="170" rx="6" fill="#f6d77a"/></g>
-        <rect x="120" width="40" height="330" fill="#aebccb"/>
-        <rect y="330" width="960" height="70" fill="#a9b5c1"/>
-        <rect y="398" width="960" height="8" fill="#f2c230"/>
-        <rect y="406" width="960" height="134" fill="#3a4150"/>
-        <!-- tourist holding envelope -->
-        <g transform="translate(470 0)">
-          <rect x="-17" y="262" width="34" height="62" rx="12" fill="#2f6fb0"/>
-          <rect x="-26" y="268" width="12" height="34" rx="4" fill="#1f4f80"/>
-          <circle cx="0" cy="246" r="15" fill="#f0c9a0"/>
-          <rect x="-15" y="230" width="30" height="8" rx="4" fill="#e0362c"/>
-          <g transform="translate(12 276) rotate(-10)"><rect width="26" height="17" rx="2" fill="#e0362c"/><path d="M0 0 L13 9 L26 0" fill="none" stroke="#fff" stroke-width="2"/></g>
-        </g>
-      </svg>
-      <div class="hud" data-hud="Platform,Choice,Ride,Shop,End" data-now="1" style="--c:var(--red)"></div>
-      <div class="panel">
-        <p class="story">The train doors open, and you notice something strange about the red envelope. Your name is written on it, even though you don't know anyone in this city.</p>
-        <div class="choices">
-          <button class="choice primary" data-go="train"><kbd>1</kbd>Board the train</button>
-          <button class="choice" data-go="envelope"><kbd>2</kbd>Open the envelope</button>
-        </div>
+  <!-- 4. THE CHOICE -->
+  <section class="screen" id="choice" aria-label="The choice">
+    <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="960" height="540" fill="#dfe5ea"/>
+      <rect width="960" height="330" fill="#c9d3dc"/>
+      <rect x="560" y="120" width="460" height="230" rx="28" fill="#e7ecf0" stroke="#8d9aa7" stroke-width="4"/>
+      <rect x="560" y="300" width="460" height="16" fill="#e0362c"/>
+      <g fill="#2b3245"><rect x="600" y="160" width="90" height="80" rx="10"/><rect x="760" y="150" width="70" height="170" rx="6" fill="#f6d77a"/><rect x="840" y="150" width="70" height="170" rx="6" fill="#f6d77a"/></g>
+      <rect x="120" width="40" height="330" fill="#aebccb"/>
+      <rect y="330" width="960" height="70" fill="#a9b5c1"/>
+      <rect y="398" width="960" height="8" fill="#f2c230"/>
+      <rect y="406" width="960" height="134" fill="#3a4150"/>
+      <g transform="translate(470 0)">
+        <rect x="-17" y="262" width="34" height="62" rx="12" fill="#2f6fb0"/>
+        <rect x="-26" y="268" width="12" height="34" rx="4" fill="#1f4f80"/>
+        <circle cx="0" cy="246" r="15" fill="#f0c9a0"/>
+        <rect x="-15" y="230" width="30" height="8" rx="4" fill="#e0362c"/>
+        <g transform="translate(12 276) rotate(-10)"><rect width="26" height="17" rx="2" fill="#e0362c"/><path d="M0 0 L13 9 L26 0" fill="none" stroke="#fff" stroke-width="2"/></g>
+      </g>
+    </svg>
+    <div class="hud"></div>
+    <div class="panel">
+      <p class="story" id="choice-text" tabindex="-1" data-focus></p>
+      <div class="choices">
+        <button class="choice primary" data-action="board"><kbd>1</kbd>Board the train</button>
+        <button class="choice" data-action="open"><kbd>2</kbd>Open the envelope</button>
       </div>
-      <div class="anno" style="left:40cqw;top:46cqw"><i>4</i>Branch point: splits the story</div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 4. TRAIN -->
-    <section class="screen" id="train" data-label="Train: mood game" data-note="<b>Train path: conversation mood game.</b> The mood score stays hidden. Players only see the stranger's expression change. If it drops too low, they get the Wrong Stop ending.">
-      <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <rect width="960" height="540" fill="#f6d77a"/>
-        <defs><clipPath id="win"><rect x="60" y="60" width="200" height="140" rx="14"/><rect x="380" y="60" width="200" height="140" rx="14"/><rect x="700" y="60" width="200" height="140" rx="14"/></clipPath></defs>
-        <g clip-path="url(#win)">
-          <rect width="960" height="540" fill="#2b3245"/>
-          <g class="streak" stroke="#ffe9a8" stroke-width="4" stroke-linecap="round" opacity=".8">
-            <line x1="100" y1="100" x2="180" y2="100"/><line x1="420" y1="150" x2="520" y2="150"/><line x1="760" y1="90" x2="820" y2="90"/>
-            <line x1="1060" y1="100" x2="1140" y2="100"/><line x1="1380" y1="150" x2="1480" y2="150"/><line x1="1720" y1="90" x2="1780" y2="90"/>
-          </g>
+  <!-- 5. TRAIN CONVERSATION -->
+  <section class="screen" id="train" aria-label="On the train">
+    <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="960" height="540" fill="#f6d77a"/>
+      <defs><clipPath id="win"><rect x="60" y="60" width="200" height="140" rx="14"/><rect x="380" y="60" width="200" height="140" rx="14"/><rect x="700" y="60" width="200" height="140" rx="14"/></clipPath></defs>
+      <g clip-path="url(#win)">
+        <rect width="960" height="540" fill="#2b3245"/>
+        <g class="streak" stroke="#ffe9a8" stroke-width="4" stroke-linecap="round" opacity=".8">
+          <line x1="100" y1="100" x2="180" y2="100"/><line x1="420" y1="150" x2="520" y2="150"/><line x1="760" y1="90" x2="820" y2="90"/>
+          <line x1="1060" y1="100" x2="1140" y2="100"/><line x1="1380" y1="150" x2="1480" y2="150"/><line x1="1720" y1="90" x2="1780" y2="90"/>
         </g>
-        <g fill="none" stroke="#e9b949" stroke-width="10"><rect x="60" y="60" width="200" height="140" rx="14"/><rect x="380" y="60" width="200" height="140" rx="14"/><rect x="700" y="60" width="200" height="140" rx="14"/></g>
-        <g fill="#c9ccd3"><rect x="320" y="0" width="10" height="400"/><rect x="630" y="0" width="10" height="400"/></g>
-        <rect y="300" width="960" height="70" rx="10" fill="#d98f2b"/>
-        <rect y="370" width="960" height="170" fill="#c27d22"/>
-        <!-- tourist seated -->
-        <g transform="translate(220 0)">
-          <rect x="-20" y="236" width="40" height="70" rx="14" fill="#2f6fb0"/>
-          <circle cx="0" cy="218" r="16" fill="#f0c9a0"/>
-          <rect x="-16" y="201" width="32" height="8" rx="4" fill="#e0362c"/>
-        </g>
-        <!-- stranger seated with book -->
-        <g transform="translate(740 0)">
-          <rect x="-22" y="232" width="44" height="74" rx="14" fill="#7a5aa6"/>
-          <circle cx="0" cy="212" r="17" fill="#c58f63"/>
-          <path d="M-17 206 q17 -22 34 0" fill="#3a2a1e"/>
-          <rect x="-34" y="252" width="30" height="22" rx="2" fill="#3f9a5c"/>
-          <path d="M-7 218 q7 4 14 0" stroke="#1d2433" stroke-width="2" fill="none" stroke-linecap="round"/>
-        </g>
-      </svg>
-      <div class="hud" data-hud="Platform,Choice,Ride,Shop,End" data-now="2" style="--c:var(--red)"></div>
-      <div class="bubble">This line’s always late. Where are you headed with that giant map?</div>
-      <div class="panel">
-        <div class="who">Your reply</div>
-        <div class="choices">
-          <button class="choice primary" data-go="shop"><kbd>1</kbd>"The famous ice cream place! Do you know it?"</button>
-          <button class="choice" data-go="shop"><kbd>2</kbd>"Is that book any good?"</button>
-          <button class="choice" data-go="endings"><kbd>3</kbd>"Why do you want to know?"</button>
-        </div>
+      </g>
+      <g fill="none" stroke="#e9b949" stroke-width="10"><rect x="60" y="60" width="200" height="140" rx="14"/><rect x="380" y="60" width="200" height="140" rx="14"/><rect x="700" y="60" width="200" height="140" rx="14"/></g>
+      <g fill="#c9ccd3"><rect x="320" y="0" width="10" height="400"/><rect x="630" y="0" width="10" height="400"/></g>
+      <rect y="300" width="960" height="70" rx="10" fill="#d98f2b"/>
+      <rect y="370" width="960" height="170" fill="#c27d22"/>
+      <g transform="translate(220 0)">
+        <rect x="-20" y="236" width="40" height="70" rx="14" fill="#2f6fb0"/>
+        <circle cx="0" cy="218" r="16" fill="#f0c9a0"/>
+        <rect x="-16" y="201" width="32" height="8" rx="4" fill="#e0362c"/>
+      </g>
+      <g transform="translate(740 0)">
+        <rect x="-22" y="232" width="44" height="74" rx="14" fill="#7a5aa6"/>
+        <circle cx="0" cy="212" r="17" fill="#c58f63"/>
+        <path d="M-17 206 q17 -22 34 0" fill="#3a2a1e"/>
+        <rect x="-34" y="252" width="30" height="22" rx="2" fill="#3f9a5c"/>
+        <path id="stranger-mouth" d="M-7 220 h14" stroke="#1d2433" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <div class="hud"></div>
+    <div class="bubble"><span class="sr-only">The stranger says: </span><span id="train-line"></span></div>
+    <div class="panel">
+      <div class="who" id="train-who" tabindex="-1" data-focus>Your reply</div>
+      <div class="choices" id="train-choices"></div>
+    </div>
+  </section>
+
+  <!-- 6. ENVELOPE LETTER -->
+  <section class="screen" id="envelope" aria-label="The envelope">
+    <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs><linearGradient id="dusk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8dcd6"/><stop offset="1" stop-color="#e7b3a8"/></linearGradient></defs>
+      <rect width="960" height="540" fill="url(#dusk)"/>
+      <g transform="translate(90 250) rotate(-6)">
+        <rect width="300" height="200" rx="8" fill="#e0362c"/>
+        <path d="M0 0 L150 100 L300 0" fill="#c22c23"/>
+      </g>
+    </svg>
+    <div class="hud"></div>
+    <article class="card letter">
+      <p class="eyebrow">Inside the envelope</p>
+      <h2 tabindex="-1" data-focus>Dear <span class="player-name"></span>,</h2>
+      <p>The fastest route isn't always the best one. Leave the train behind and follow the map. Something is waiting for you at the end.</p>
+      <p class="sign">— A friend</p>
+      <div class="choices">
+        <button class="choice primary" data-action="start-maze"><kbd>1</kbd>Follow the map <span aria-hidden="true">→</span></button>
       </div>
-      <div class="anno" style="left:66cqw;top:36cqw"><i>5</i>Expression = only mood feedback</div>
-    </section>
+    </article>
+  </section>
 
-    <!-- 5. ENVELOPE -->
-    <section class="screen" id="envelope" data-label="Envelope: decoding" data-note="<b>Envelope path: decoding puzzle.</b> Each symbol pairs a line color with a shape, so the puzzle still works without telling colors apart. The palette shifts toward red as the world gets stranger.">
-      <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <defs><linearGradient id="dusk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8dcd6"/><stop offset="1" stop-color="#e7b3a8"/></linearGradient></defs>
-        <rect width="960" height="540" fill="url(#dusk)"/>
-        <!-- open envelope + card -->
-        <g transform="translate(110 210) rotate(-5)">
-          <rect width="300" height="200" rx="8" fill="#e0362c"/>
-          <path d="M0 0 L150 100 L300 0" fill="#c22c23"/>
-          <rect x="30" y="-90" width="240" height="170" rx="8" fill="#fff8ec"/>
-          <g font-family="system-ui,sans-serif" font-size="30" font-weight="700" text-anchor="middle">
-            <text x="70" y="-30" fill="#e0362c">●</text><text x="110" y="-30" fill="#3f9a5c">▲</text><text x="150" y="-30" fill="#2f6fb0">■</text>
-            <text x="190" y="-30" fill="#f2a900">◆</text><text x="230" y="-30" fill="#7a5aa6">★</text>
-            <text x="150" y="20" fill="#1c9aa0">✚</text>
-          </g>
-        </g>
-      </svg>
-      <div class="hud" data-hud="Platform,Choice,Envelope,Clues,End" data-now="2" style="--c:var(--purple)"></div>
-      <div class="decoder">
-        <h3>Decode the message</h3>
-        <p class="sub">Each symbol belongs to a subway line. Match it to the line's letter.</p>
-        <div class="legend">
-          <div><span class="sw" style="background:var(--red)">●</span>Red<b>G</b></div>
-          <div><span class="sw" style="background:var(--green)">▲</span>Green<b>A</b></div>
-          <div><span class="sw" style="background:var(--blue)">■</span>Blue<b>R</b></div>
-          <div><span class="sw" style="background:#f2a900">◆</span>Gold<b>?</b></div>
-          <div><span class="sw" style="background:var(--purple)">★</span>Purple<b>?</b></div>
-          <div><span class="sw" style="background:#1c9aa0">✚</span>Teal<b>?</b></div>
+  <!-- 7. MAZE -->
+  <section class="screen" id="maze" aria-label="Maze">
+    <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs><linearGradient id="dusk2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e7b3a8"/><stop offset="1" stop-color="#cfe3c4"/></linearGradient></defs>
+      <rect width="960" height="540" fill="url(#dusk2)"/>
+    </svg>
+    <div class="hud"></div>
+    <div class="maze-layout">
+      <div class="card maze-info">
+        <h2 tabindex="-1" data-focus>Follow the map</h2>
+        <p class="muted">Lead the dot <span class="legend-dot" aria-hidden="true"></span> through the back streets to the door marked <span class="legend-exit" aria-hidden="true"></span>.</p>
+        <p class="moves">Moves: <b id="maze-moves">0</b></p>
+        <p class="maze-msg" id="maze-msg"></p>
+        <div class="dpad" aria-label="Move">
+          <button class="key up" data-action="move" data-dr="-1" data-dc="0" aria-label="Move up">↑</button>
+          <button class="key left" data-action="move" data-dr="0" data-dc="-1" aria-label="Move left">←</button>
+          <button class="key right" data-action="move" data-dr="0" data-dc="1" aria-label="Move right">→</button>
+          <button class="key down" data-action="move" data-dr="1" data-dc="0" aria-label="Move down">↓</button>
         </div>
-        <div class="slots">
-          <div class="slot"><span class="sym" style="color:var(--red)">●</span><span class="box filled">G</span></div>
-          <div class="slot"><span class="sym" style="color:var(--green)">▲</span><span class="box filled">A</span></div>
-          <div class="slot"><span class="sym" style="color:var(--blue)">■</span><span class="box filled">R</span></div>
-          <div class="slot"><span class="sym" style="color:#f2a900">◆</span><span class="box cursor"></span></div>
-          <div class="slot"><span class="sym" style="color:var(--purple)">★</span><span class="box"></span></div>
-          <div class="slot"><span class="sym" style="color:#1c9aa0">✚</span><span class="box"></span></div>
-        </div>
-        <div class="choices"><button class="choice primary" data-go="garden">Follow the route →</button></div>
+        <button class="choice small" data-action="maze-restart">Restart maze</button>
       </div>
-      <div class="anno" style="left:6cqw;top:44cqw"><i>6</i>Shape + color, never color alone</div>
-    </section>
+      <div class="maze-board" id="maze-board" role="img" aria-label="Maze map. Use the arrow keys or the buttons to move."></div>
+    </div>
+  </section>
 
-    <!-- 6. SHOP -->
-    <section class="screen" id="shop" data-label="Ice cream shop" data-note="<b>Ice cream shop: flavor pick.</b> A small, low-stakes choice that's saved and shown again on the ending screen.">
-      <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <rect width="960" height="540" fill="#f7c6d0"/>
-        <g fill="#f3b3c1"><rect x="0" y="0" width="60" height="540"/><rect x="120" y="0" width="60" height="540"/><rect x="240" y="0" width="60" height="540"/><rect x="360" y="0" width="60" height="540"/><rect x="480" y="0" width="60" height="540"/><rect x="600" y="0" width="60" height="540"/><rect x="720" y="0" width="60" height="540"/><rect x="840" y="0" width="60" height="540"/></g>
-        <path d="M0 40 H960" stroke="#bfe8d6" stroke-width="40"/>
-        <g fill="#fff4dc"><path d="M60 40 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0 q30 40 60 0"/></g>
-        <rect x="80" y="110" width="800" height="150" rx="16" fill="#fff4dc"/>
-        <g><circle cx="240" cy="140" r="40" fill="#f48aa0"/><circle cx="400" cy="140" r="40" fill="#a8d08d"/><circle cx="560" cy="140" r="40" fill="#ffc857"/><circle cx="720" cy="140" r="40" fill="#5a4a42"/><circle cx="708" cy="128" r="6" fill="#fff"/><circle cx="734" cy="150" r="5" fill="#fff"/></g>
-        <rect x="80" y="170" width="800" height="16" fill="#bfe8d6"/>
-      </svg>
-      <div class="hud" data-hud="Platform,Choice,Ride,Shop,End" data-now="3" style="--c:var(--red)"></div>
-      <div class="panel">
-        <p class="story">You finally made it to the ice cream shop! Now, which flavor are you getting?</p>
-        <div class="flavors" role="radiogroup" aria-label="Flavor">
-          <button class="flavor" role="radio" aria-checked="false"><span class="scoop" style="background:#f48aa0"></span>Strawberry</button>
-          <button class="flavor sel" role="radio" aria-checked="true"><span class="scoop" style="background:#a8d08d"></span>Pistachio</button>
-          <button class="flavor" role="radio" aria-checked="false"><span class="scoop" style="background:#ffc857"></span>Mango</button>
-          <button class="flavor" role="radio" aria-checked="false"><span class="scoop" style="background:radial-gradient(circle at 30% 30%,#fff 0 12%,transparent 13%),radial-gradient(circle at 65% 60%,#fff 0 10%,transparent 11%),#5a4a42"></span>Cookies &amp; Cream</button>
-        </div>
-        <div class="choices"><button class="choice primary" data-go="ending">Order Pistachio →</button></div>
-      </div>
-    </section>
+  <!-- 8. ICE CREAM SHOP -->
+  <section class="screen" id="shop" aria-label="Ice cream shop">
+    <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="960" height="540" fill="#f7c6d0"/>
+      <g fill="#f3b3c1"><rect x="0" width="60" height="540"/><rect x="120" width="60" height="540"/><rect x="240" width="60" height="540"/><rect x="360" width="60" height="540"/><rect x="480" width="60" height="540"/><rect x="600" width="60" height="540"/><rect x="720" width="60" height="540"/><rect x="840" width="60" height="540"/></g>
+      <path d="M0 40 H960" stroke="#bfe8d6" stroke-width="40"/>
+      <rect x="80" y="110" width="800" height="150" rx="16" fill="#fff4dc"/>
+      <g><circle cx="240" cy="140" r="40" fill="#f48aa0"/><circle cx="400" cy="140" r="40" fill="#a8d08d"/><circle cx="560" cy="140" r="40" fill="#ffc857"/><circle cx="720" cy="140" r="40" fill="#5a4a42"/><circle cx="708" cy="128" r="6" fill="#fff"/><circle cx="734" cy="150" r="5" fill="#fff"/></g>
+      <rect x="80" y="170" width="800" height="16" fill="#bfe8d6"/>
+    </svg>
+    <div class="hud"></div>
+    <form class="panel" id="flavor-form" novalidate>
+      <p class="story" id="shop-text" tabindex="-1" data-focus></p>
+      <fieldset class="flavors" aria-describedby="flavor-error">
+        <legend class="sr-only">Choose a flavor</legend>
+        <label class="flavor"><input type="radio" name="flavor" value="Strawberry"><span class="scoop" style="background:#f48aa0"></span>Strawberry</label>
+        <label class="flavor"><input type="radio" name="flavor" value="Pistachio"><span class="scoop" style="background:#a8d08d"></span>Pistachio</label>
+        <label class="flavor"><input type="radio" name="flavor" value="Mango"><span class="scoop" style="background:#ffc857"></span>Mango</label>
+        <label class="flavor"><input type="radio" name="flavor" value="Cookies &amp; Cream"><span class="scoop cc"></span>Cookies &amp; Cream</label>
+      </fieldset>
+      <p class="error" id="flavor-error" role="alert"></p>
+      <div class="choices"><button type="submit" class="choice primary" id="order-btn">Order <span aria-hidden="true">→</span></button></div>
+    </form>
+  </section>
 
-    <!-- 7. ENDING -->
-    <section class="screen" id="ending" data-label="Ending" data-note="<b>Ending screen.</b> Shows the ending's name, a recap of the player's key choices, and a nudge toward the endings they haven't found yet.">
-      <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <!-- 9. ENDING (one screen, filled from story.json) -->
+  <section class="screen" id="ending" aria-labelledby="ending-title">
+    <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g data-scene="sweet">
         <rect width="960" height="540" fill="#bfe8d6"/>
         <g opacity=".55">
           <g transform="translate(110 300)"><path d="M0 0 L30 110 L60 0Z" fill="#e2a65b"/><circle cx="30" cy="-6" r="34" fill="#a8d08d"/></g>
           <g transform="translate(800 320) rotate(12)"><path d="M0 0 L30 110 L60 0Z" fill="#e2a65b"/><circle cx="30" cy="-6" r="34" fill="#f48aa0"/></g>
-          <circle cx="160" cy="90" r="10" fill="#fff"/><circle cx="820" cy="120" r="14" fill="#fff"/><circle cx="740" cy="60" r="7" fill="#fff"/><circle cx="240" cy="460" r="8" fill="#fff"/>
+          <circle cx="160" cy="90" r="10" fill="#fff"/><circle cx="820" cy="120" r="14" fill="#fff"/><circle cx="740" cy="60" r="7" fill="#fff"/>
         </g>
-      </svg>
-      <div class="ending-card">
-        <div class="eyebrow">Ending 2 of 4</div>
-        <h2>Sweet Arrival</h2>
-        <p class="lede">The map still makes no sense, but the pistachio is perfect. You got here on your own.</p>
-        <div class="recap"><span>🚇 Boarded the train</span><span>💬 Stranger was friendly enough</span><span>🍨 Pistachio</span></div>
-        <p class="lede" style="font-size:1.25cqw">There are 3 other ways this day could have gone.</p>
-        <div class="choices">
-          <button class="choice primary" data-go="choice">Try the other path</button>
-          <button class="choice" data-go="endings">View endings</button>
-          <button class="choice" data-go="home">Home</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 8. GARDEN ENDING -->
-    <section class="screen" id="garden" data-label="Ending: garden" data-note="<b>Ending screen, envelope path.</b> Same layout, different palette. The garden is a quiet reveal after the red-shifted puzzle.">
-      <svg class="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      </g>
+      <g data-scene="friend">
+        <rect width="960" height="540" fill="#f7c6d0"/>
+        <g opacity=".6">
+          <g transform="translate(90 330) rotate(-10)"><path d="M0 0 L30 110 L60 0Z" fill="#e2a65b"/><circle cx="30" cy="-6" r="34" fill="#ffc857"/></g>
+          <g transform="translate(150 330) rotate(10)"><path d="M0 0 L30 110 L60 0Z" fill="#e2a65b"/><circle cx="30" cy="-6" r="34" fill="#a8d08d"/></g>
+          <path d="M820 120 c-20 -30 -60 -10 -40 20 l40 40 l40 -40 c20 -30 -20 -50 -40 -20z" fill="#fff"/>
+        </g>
+      </g>
+      <g data-scene="wrong">
+        <rect width="960" height="540" fill="#4a5568"/>
+        <rect width="960" height="330" fill="#5b667a"/>
+        <rect x="380" y="70" width="240" height="44" rx="6" fill="#1d2433"/>
+        <text x="500" y="99" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-weight="700" font-size="18" letter-spacing="3">WILLOW PARK</text>
+        <rect y="398" width="960" height="8" fill="#f2c230"/>
+        <rect y="406" width="960" height="134" fill="#2b3245"/>
+      </g>
+      <g data-scene="garden">
         <rect width="960" height="540" fill="#e3efd9"/>
         <g fill="#8fbf7f"><circle cx="80" cy="460" r="140"/><circle cx="900" cy="470" r="160"/><circle cx="120" cy="60" r="90"/><circle cx="860" cy="40" r="110"/></g>
         <g fill="#5e9a5a"><circle cx="20" cy="520" r="100"/><circle cx="960" cy="540" r="110"/></g>
-        <g fill="#fff8ec" opacity=".7"><circle cx="300" cy="120" r="6"/><circle cx="680" cy="420" r="8"/><circle cx="620" cy="90" r="5"/><circle cx="260" cy="430" r="7"/></g>
-      </svg>
-      <div class="ending-card">
-        <div class="eyebrow" style="color:var(--green)">Ending 4 of 4</div>
-        <h2>Secret Garden</h2>
-        <p class="lede">Behind a door with no sign, the city goes quiet. Whoever wrote your name on that envelope wanted you to find this.</p>
-        <div class="recap"><span>✉️ Opened the envelope</span><span>🔣 Decoded GARDEN</span></div>
-        <div class="choices">
-          <button class="choice primary" data-go="choice">Try the other path</button>
-          <button class="choice" data-go="endings">View endings</button>
+      </g>
+    </svg>
+    <div class="ending-card">
+      <div class="eyebrow" id="ending-eyebrow"></div>
+      <h2 id="ending-title" tabindex="-1" data-focus></h2>
+      <p class="lede" id="ending-text"></p>
+      <ul class="recap" id="ending-recap" aria-label="Your choices"></ul>
+      <p class="lede small" id="ending-count"></p>
+      <div class="choices">
+        <button class="choice primary" data-action="replay">Try the other path</button>
+        <button class="choice" data-go="endings">View endings</button>
+        <button class="choice" data-go="home">Home</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. ENDINGS & PROGRESS -->
+  <section class="screen" id="endings" aria-labelledby="endings-title">
+    <div class="page">
+      <div class="page-head">
+        <div><button class="back" data-go="home">← Home</button><h2 id="endings-title" tabindex="-1" data-focus>Your endings</h2></div>
+        <div class="count"><b id="found-count">0</b> of 4 found</div>
+      </div>
+      <div class="grid2">
+        <div class="mapcard">
+          <h3>Routes you've taken</h3>
+          <svg viewBox="0 0 640 260" width="100%" role="img" id="route-map" aria-label="Map of story routes">
+            <g fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M30 130 H170" class="seg on base"/>
+              <path d="M170 130 L230 70 H330" class="seg" data-ends="sweetArrival newFriend wrongStop"/>
+              <path d="M330 70 L380 25 H470" class="seg" data-ends="wrongStop"/>
+              <path d="M330 70 H470" class="seg" data-ends="sweetArrival"/>
+              <path d="M330 70 L380 115 H470" class="seg" data-ends="newFriend"/>
+              <path d="M170 130 L230 200 H470" class="seg env" data-ends="secretGarden"/>
+            </g>
+            <g stroke="#1d2433" stroke-width="4" fill="#fff"><circle cx="30" cy="130" r="9"/><circle cx="170" cy="130" r="11"/><circle cx="330" cy="70" r="9"/></g>
+            <g stroke-width="4">
+              <circle cx="480" cy="25" r="11" class="node" data-end="wrongStop"/>
+              <circle cx="480" cy="70" r="11" class="node" data-end="sweetArrival"/>
+              <circle cx="480" cy="115" r="11" class="node" data-end="newFriend"/>
+              <circle cx="480" cy="200" r="11" class="node env" data-end="secretGarden"/>
+            </g>
+            <g font-family="system-ui,sans-serif" font-size="15" fill="#1d2433">
+              <text x="30" y="160" text-anchor="middle">Platform</text>
+              <text x="170" y="165" text-anchor="middle" font-weight="700">The choice</text>
+              <text x="280" y="58" text-anchor="middle">Train</text>
+              <text x="250" y="228" fill="#5b6475">Envelope + maze</text>
+              <text x="500" y="30" class="maplabel" data-end="wrongStop"></text>
+              <text x="500" y="75" class="maplabel" data-end="sweetArrival"></text>
+              <text x="500" y="120" class="maplabel" data-end="newFriend"></text>
+              <text x="500" y="205" class="maplabel" data-end="secretGarden"></text>
+            </g>
+          </svg>
+        </div>
+        <div class="side">
+          <h3>Endings</h3>
+          <ul class="endlist" id="endlist"></ul>
+          <div class="resume" id="resume-card" hidden>
+            <p><b id="resume-label">In progress</b><br><span id="resume-name"></span></p>
+            <button class="choice primary small" data-action="continue">Resume</button>
+          </div>
+          <button class="textbtn" data-action="reset-all" id="reset-btn">Reset all progress</button>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 9. ENDINGS & PROGRESS -->
-    <section class="screen" id="endings" data-label="Endings & progress" data-note="<b>Endings &amp; Progress.</b> The branch map is drawn as a subway map. Found endings are lit up, and missing ones stay locked as hints to replay.">
-      <div class="page">
-        <div class="page-head">
-          <div><button class="back" data-go="home">← Home</button><h2>Your endings</h2></div>
-          <div class="count"><b>2</b> of 4 found</div>
+  <!-- 11. ABOUT -->
+  <section class="screen" id="about" aria-labelledby="about-title">
+    <div class="page">
+      <div class="page-head"><div><button class="back" data-go="home">← Home</button><h2 id="about-title" tabindex="-1" data-focus>About this story</h2></div></div>
+      <div class="about">
+        <div>
+          <p><strong>The Other Route</strong> is a short interactive story. You don't just read it: your choices and a few small games decide where the day goes.</p>
+          <p>One decision on the platform splits the story in two, and there are four endings to find. Your progress saves automatically in this browser, so you can leave and pick up where you left off.</p>
+          <h3>Inspired by</h3>
+          <ul class="chips"><li>Florence</li><li>Mini Metro</li><li>Kentucky Route Zero</li><li>Alto's Adventure</li><li>Reigns</li><li>80 Days</li><li>A Short Hike</li></ul>
         </div>
-        <div class="grid2">
-          <div class="mapcard">
-            <h3>Routes you've taken</h3>
-            <svg viewBox="0 0 640 300" width="100%" role="img" aria-label="Branch map with two of four endings found">
-              <g fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M30 150 H170" stroke="#1d2433"/>
-                <path d="M170 150 L230 80 H330 L380 40 H480" stroke="#e0362c"/>
-                <path d="M330 80 H480" stroke="#e0362c"/>
-                <path d="M330 80 L380 120 H480" stroke="#d6d1c6" stroke-dasharray="2 14"/>
-                <path d="M170 150 L230 220 H480" stroke="#d6d1c6" stroke-dasharray="2 14"/>
-              </g>
-              <g stroke="#1d2433" stroke-width="4" fill="#fff"><circle cx="30" cy="150" r="9"/><circle cx="170" cy="150" r="11"/><circle cx="330" cy="80" r="9"/></g>
-              <g stroke="#e0362c" stroke-width="4" fill="#e0362c"><circle cx="480" cy="40" r="11"/><circle cx="480" cy="80" r="11"/></g>
-              <g stroke="#bdb7aa" stroke-width="4" fill="#fff"><circle cx="480" cy="120" r="11"/><circle cx="480" cy="220" r="11"/></g>
-              <g font-family="system-ui,sans-serif" font-size="14" fill="#1d2433">
-                <text x="30" y="180" text-anchor="middle">Platform</text>
-                <text x="170" y="185" text-anchor="middle" font-weight="700">The choice</text>
-                <text x="280" y="68" text-anchor="middle">Train</text>
-                <text x="230" y="250" fill="#8a8476">Envelope ···</text>
-                <text x="500" y="45" font-weight="700">Wrong Stop</text>
-                <text x="500" y="85" font-weight="700">Sweet Arrival</text>
-                <text x="500" y="125" fill="#8a8476">Locked</text>
-                <text x="500" y="225" fill="#8a8476">Locked</text>
-              </g>
-            </svg>
-          </div>
-          <div class="side">
-            <h3>Endings</h3>
-            <div class="endlist">
-              <div class="end"><b>Sweet Arrival</b>Reached the shop · Pistachio</div>
-              <div class="end"><b>Wrong Stop</b>Kicked off the train</div>
-              <div class="end locked"><b>Locked</b>Hint: be good company</div>
-              <div class="end locked"><b>Locked</b>Hint: what was in the envelope?</div>
-            </div>
-            <div class="resume">
-              <svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect width="160" height="90" fill="#f6d77a"/><rect x="10" y="10" width="40" height="28" rx="4" fill="#2b3245"/><rect x="60" y="10" width="40" height="28" rx="4" fill="#2b3245"/><rect x="110" y="10" width="40" height="28" rx="4" fill="#2b3245"/><rect y="56" width="160" height="34" fill="#d98f2b"/></svg>
-              <p><b>In progress: Train ride</b><br>Saved 2 min ago</p>
-              <button class="choice primary" data-go="train">Resume</button>
-            </div>
-          </div>
+        <div class="controls">
+          <h3>Controls</h3>
+          <dl>
+            <dt><kbd>←</kbd><kbd>→</kbd></dt><dd>Walk on the platform</dd>
+            <dt><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd></dt><dd>Move through the maze</dd>
+            <dt><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd></dt><dd>Pick a choice</dd>
+            <dt><kbd>Tab</kbd><kbd>Enter</kbd></dt><dd>Move between and select buttons</dd>
+            <dt><kbd>Esc</kbd></dt><dd>Pause menu</dd>
+          </dl>
+          <p class="muted small">Animations turn off when your device has reduced motion enabled. Every key control also has an on-screen button.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 10. ABOUT -->
-    <section class="screen" id="about" data-label="About" data-note="<b>About.</b> Explains how the story works, credits the games that inspired it, and lists controls for keyboard and screen-reader users.">
-      <div class="page">
-        <div class="page-head"><div><button class="back" data-go="home">← Home</button><h2>About this story</h2></div></div>
-        <div class="about">
-          <div>
-            <p><strong>Next Stop: Ice Cream</strong> is a short interactive story. You don't just read it: your choices and a few small games decide where the day goes.</p>
-            <p>One decision on the platform splits the story in two, and there are four endings to find. Your progress saves automatically, so you can leave and pick up where you left off.</p>
-            <h3 style="font-size:1.4cqw;margin-top:.6cqw">Inspired by</h3>
-            <div class="chips"><span>Florence</span><span>Mini Metro</span><span>Kentucky Route Zero</span><span>Alto's Adventure</span><span>Reigns</span><span>80 Days</span><span>A Short Hike</span></div>
-          </div>
-          <div class="controls">
-            <h3>Controls</h3>
-            <dl>
-              <dt><kbd>←</kbd><kbd>→</kbd></dt><dd>Walk on the platform</dd>
-              <dt><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd></dt><dd>Pick a choice</dd>
-              <dt><kbd>Tab</kbd><kbd>Enter</kbd></dt><dd>Move between and select buttons</dd>
-              <dt><kbd>Esc</kbd></dt><dd>Pause menu: restart or go home</dd>
-            </dl>
-            <p style="font-size:1.15cqw;color:var(--ink2);margin-top:1.6cqw;line-height:1.5">Animations turn off when your device has reduced motion enabled.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </div>
-  <p class="note"><label><input type="checkbox" id="annoToggle" checked> Show design notes</label> · Click buttons inside the mockup to move between screens.</p>
 </main>
+
+<!-- Pause menu -->
+<dialog id="pause" aria-labelledby="pause-title">
+  <h2 id="pause-title">Paused</h2>
+  <p class="muted">Your progress is saved.</p>
+  <div class="stack">
+    <button class="choice primary" data-action="resume" autofocus>Resume</button>
+    <button class="choice" data-action="restart">Restart the story</button>
+    <button class="choice" data-action="quit">Go to home</button>
+  </div>
+</dialog>
 
 <script src="script.js"></script>
 </body>
